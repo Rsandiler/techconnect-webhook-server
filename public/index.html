@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechConnect - Conectando Clientes y Técnicos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: #F0F4F7;
+            --foreground: #0a192f; 
+            --primary: #64B5F6; 
+            --accent: #81C784; 
+            --accent-foreground: #ffffff;
+            --muted-foreground: #6b7280;
+            --card: #ffffff;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+        }
+        .bg-primary { background-color: var(--primary); }
+        .text-primary { color: var(--primary); }
+        .bg-accent { background-color: var(--accent); }
+        .text-accent-foreground { color: var(--accent-foreground); }
+        .hover\:bg-accent\/90:hover { background-color: #72b376; }
+        .text-muted-foreground { color: var(--muted-foreground); }
+        .bg-card { background-color: var(--card); }
+        .bg-card\/50 { background-color: rgba(255, 255, 255, 0.5); }
+        .bg-primary\/10 { background-color: rgba(100, 181, 246, 0.1); }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.2s;
+        }
+        .btn-lg {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="flex flex-col min-h-screen">
+        <header class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <a href="/" class="flex items-center gap-2 font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    <span class="text-xl font-bold">TechConnect</span>
+                </a>
+                <nav>
+                    <a href="https://techconnectcore.blogspot.com/" target="_blank" rel="noopener noreferrer" class="ml-2 btn bg-accent text-accent-foreground hover:bg-accent/90">
+                        Acceder a la Plataforma
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="flex-grow">
+            <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
+                    Conectando Clientes con Técnicos Expertos
+                </h2>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+                    TechConnect es la plataforma ideal para resolver tus problemas técnicos. Publica una solicitud y encuentra un profesional calificado en minutos.
+                </p>
+                <div class="mt-8">
+                    <a href="https://techconnectcore.blogspot.com/" target="_blank" rel="noopener noreferrer" class="btn btn-lg bg-accent text-accent-foreground hover:bg-accent/90">
+                        Ir a mi Panel
+                    </a>
+                </div>
+            </section>
+
+            <section class="py-16 md:py-24" style="background-color: #f8fafc;">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12">
+                        <h3 class="text-3xl font-bold">¿Cómo Funciona?</h3>
+                        <p class="text-muted-foreground mt-2">Un proceso simple para que resuelvas tus necesidades.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center p-6 rounded-lg bg-card shadow-sm">
+                            <div class="mx-auto bg-primary/10 p-3 rounded-full w-fit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </div>
+                            <h4 class="mt-4 text-xl font-semibold">1. Crea una Solicitud</h4>
+                            <p class="mt-2 text-sm text-muted-foreground">
+                                Los clientes se registran y detallan sus necesidades técnicas. Es rápido, fácil y gratuito.
+                            </p>
+                        </div>
+                        <div class="text-center p-6 rounded-lg bg-card shadow-sm">
+                            <div class="mx-auto bg-primary/10 p-3 rounded-full w-fit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                            </div>
+                            <h4 class="mt-4 text-xl font-semibold">2. Encuentra un Técnico</h4>
+                            <p class="mt-2 text-sm text-muted-foreground">
+                                Técnicos verificados exploran y aceptan las solicitudes que coinciden con sus habilidades.
+                            </p>
+                        </div>
+                        <div class="text-center p-6 rounded-lg bg-card shadow-sm">
+                            <div class="mx-auto bg-primary/10 p-3 rounded-full w-fit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            </div>
+                            <h4 class="mt-4 text-xl font-semibold">3. Conecta y Resuelve</h4>
+                            <p class="mt-2 text-sm text-muted-foreground">
+                                Comunícate directamente con tu técnico a través de nuestro chat para realizar el trabajo de manera eficiente.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-muted-foreground">
+            <p>&copy; <span id="year"></span> TechConnect. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "file-upload-system-to-firebase",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

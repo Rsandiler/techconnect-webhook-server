@@ -1,0 +1,6 @@
+# Dependencias de Node.js
+node_modules
+
+# Archivos de entorno y credenciales secretas
+.env
+serviceAccountKey.json

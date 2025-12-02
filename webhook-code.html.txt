@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código para server.js</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        pre {
+            background-color: #e4e4e4;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap; /* Asegura que el código no se salga del contenedor */
+            word-wrap: break-word;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Código para el archivo <code>server.js</code></h1>
+    <p>Copia todo el texto que está dentro del siguiente recuadro:</p>
+    
+    <pre><code>
+// Carga las variables de entorno desde el archivo .env
+require('dotenv').config();
+
+const express = require('express');
+const admin = require('firebase-admin');
+
+// --- Configuración de Firebase ---
+// Asegúrate de tener tu archivo serviceAccountKey.json en la raíz del proyecto.
+// ¡IMPORTANTE! Este archivo es privado y no debe subirse a repositorios públicos.
+try {
+  const serviceAccount = require('./serviceAccountKey.json');
+
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: process.env.FIREBASE_DATABASE_URL // Usa la URL de tu base de datos desde .env
+  });
+
+  const db = admin.firestore();
+  console.log('Firebase Admin SDK inicializado correctamente.');
+
+  // ----------------------------------
+
+
+  const app = express();
+
+  // Middleware para parsear el cuerpo de las solicitudes como JSON
+  // PayPal envía los webhooks en formato JSON.
+  app.use(express.json());
+
+
+  // --- Ruta del Webhook de PayPal ---
+  // Esta es la ruta que configurarás en tu panel de desarrollador de PayPal.
+  app.post('/api/paypal-webhook', async (req, res) => {
+    console.log('Webhook de PayPal recibido!');
+    
+    const event = req.body;
+
+    // 1. LÓGICA DE VERIFICACIÓN (¡MUY IMPORTANTE!)
+    // Esta sección es un placeholder. En un entorno real, necesitarías verificar
+    // la firma del webhook con el ID que te da PayPal.
+    // Por ahora, asumimos que es válido para poder desarrollar.
+    const isVerified = true; // ¡CAMBIAR ESTO EN PRODUCCIÓN!
+
+    if (!isVerified) {
+      console.log('Error: Webhook no verificado.');
+      return res.status(401).send('Verificación de Webhook fallida.');
+    }
+    
+    console.log('Webhook verificado correctamente.');
+    console.log('Tipo de evento:', event.event_type);
+
+    // 2. PROCESAR EL EVENTO DE CANCELACIÓN
+    if (event.event_type === 'BILLING.SUBSCRIPTION.CANCELLED') {
+      // El custom_id debería ser el ID del técnico en Firebase.
+      // Lo configuras al crear el botón de suscripción de PayPal.
+      const technicianId = event.resource.custom_id; 
+      
+      if (!technicianId) {
+        console.log('Error: No se encontró custom_id (technicianId) en el evento.');
+        // Devolvemos 200 para que PayPal no reintente, ya que no podemos hacer nada.
+        return res.status(200).send('Evento recibido pero sin technicianId.');
+      }
+
+      console.log(`Procesando cancelación para el técnico: ${technicianId}`);
+
+      try {
+        const technicianRef = db.collection('technicians').doc(technicianId);
+        // Actualizamos el campo 'subscriptionStatus' (o el que uses) a 'cancelled'.
+        await technicianRef.update({
+          subscriptionStatus: 'cancelled' 
+        });
+        console.log(`El técnico ${technicianId} ha sido actualizado a 'cancelled' en Firebase.`);
+
+      } catch (error) {
+        console.error('Error al actualizar el técnico en Firebase:', error);
+        // Si hay un error con Firebase, respondemos con 500 para que PayPal pueda reintentar.
+        return res.status(500).send('Error interno del servidor.');
+      }
+    }
+
+    // 3. RESPONDER A PAYPAL
+    // Responde a PayPal con un status 200 OK para confirmar que recibiste y procesaste el evento.
+    res.status(200).send('Webhook recibido y procesado');
+  });
+  // ----------------------------------
+
+
+  // Ruta de prueba para verificar que el servidor está funcionando
+  app.get('/', (req, res) => {
+    res.send('Servidor de Webhook para PayPal está en línea y funcionando.');
+  });
+
+
+  const PORT = process.env.PORT || 8080;
+  app.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto ${PORT}`);
+  });
+
+} catch (error) {
+    if (error.code === 'MODULE_NOT_FOUND') {
+        console.error('Error: El archivo serviceAccountKey.json no se encontró.');
+        console.error('Por favor, asegúrate de que el archivo está en la raíz del proyecto.');
+    } else {
+        console.error('Ocurrió un error inesperado:', error);
+    }
+    process.exit(1); // Detiene la aplicación si hay un error crítico
+}
+    </code></pre>
+
+</body>
+</html>
